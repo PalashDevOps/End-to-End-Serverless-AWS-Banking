@@ -1,0 +1,27 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: 
+  This template creates an Amazon S3 bucket for a banking application,
+  along with other resources.
+
+Resources:
+  BankingS3Bucket:
+    Type: 'AWS::S3::Bucket'
+    Properties:
+      BucketName: my-banking-app-bucket-4499 # Adjust the bucket name to meet S3 naming constraints
+
+  LambdaExecutionRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Effect: "Allow"
+          Principal:
+            Service: 
+              - lambda.amazonaws.com
+          Action: 
+            - "sts:AssumeRole"  # Moved Action field under the Principal section
+      Description:  "The role that AWS Lambda uses when executing function."
+      ManagedPolicyArns: 
+        - arn:aws:iam::aws:policy/AmazonS3FullAccess
+      RoleName: LambdaExecutionRole
